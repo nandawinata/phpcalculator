@@ -6,6 +6,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Jakmall\Recruitment\Calculator\Services\BaseOperationService;
+use Jakmall\Recruitment\Calculator\Services\HistoryService;
 
 class BaseOperation extends Command
 {
@@ -22,6 +23,8 @@ class BaseOperation extends Command
         $this->generateInputDisplay();
         $this->calculate();
         $this->generateOutputDisplay();
+
+        HistoryService::store(ucfirst(static::$defaultName), $this->inputDisplay, $this->result, $this->outputDisplay);
 
         $output->writeln($this->outputDisplay);
     }
